@@ -26,6 +26,40 @@ function addWorksToGallery(works) {
     `).join("");
 }
 
+//----------------------------FILTRES---------------------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    const categories = [
+        { id: "0", name: "Tous" },
+        { id: "1", name: "Objets" },
+        { id: "2", name: "Appartements" },
+        { id: "3", name: "Hotels et restaurants" }
+    ];
+
+    const filtersContainer = document.querySelector(".filters");
+
+    categories.forEach(category => {
+        const button = document.createElement("button");
+        button.classList.add("filters-button");
+        button.dataset.category = category.id;
+        button.textContent = category.name;
+
+        button.addEventListener("click", () => {
+            filterImages(category.id);
+            setActiveButton(button);
+        });
+
+        filtersContainer.appendChild(button);
+    });
+
+    function setActiveButton(activeButton) {
+        document.querySelectorAll(".filters-button").forEach(button => {
+            button.classList.remove("active");
+        });
+        activeButton.classList.add("active");
+    }
+});
+
 function filterImages(categoryId) {
     console.log("categoryId", categoryId);
     if (categoryId === "0") {
@@ -66,87 +100,33 @@ function filterImages(categoryId) {
     }
 }
 
+//----------------------------FETCH POST---------------------------------------------
 
-//--------------------------------------------------------------------------------
-/*
-function filterAll(works) {
-    addWorksToGallery(works);
-}
+document.querySelector("#login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-function filtersObjects(works) {
-    const objects = works.filter(work => work.categoryId === 2);
-    addWorksToGallery(objects);
-}
+    const email = document.querySelector("#email").value;
+    const password = document.querySelector("#password").value;
 
-/*
-// Fonction pour filtrer les œuvres par categoryId
-function filterWorksByCategory(categoryId, works) {
-    let filteredWorks = [];
-
-    if (categoryId === "all") {
-        filteredWorks = works;
-    }
-
-    if (categoryId === "objects") {
-        filteredWorks = works.filter(work => work.categoryId === 2);
-    }
-
-    addWorksToGallery(filteredWorks);
-        
-    }
-/*
-    function setupFilterListeners(works) {
-        const filters = document.querySelectorAll(".filters-button");
-    
-        filters.forEach(filter => {
-            filter.addEventListener("click", (event) => {
-                const categoryId = event.target.getAttribute("data-category");
-                filterWorksByCategory(categoryId, works); // Filtrer les œuvres selon le categoryId
-            });
+    try {
+        const response = await fetch("http://localhost:5678/api/login", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
         });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("authToken", data.token);
+
+            window.location.href = "accueil.html";
+        } else {
+            document.querySelector("#error-message").textContent = "erreur";
+        }
+    } catch (error) {
+        console.error("Erreur lors de la connexion :", error);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    works.forEach(work => {
-        // Créer un nouvel élément <figure> pour chaque travail
-        const figure = document.createElement("figure");
-    
-        // Créer une balise <img> pour l'image
-        const img = document.createElement("img");
-        img.src = work.imageUrl; // Définir l'URL de l'image
-        img.alt = work.title;     // Définir le texte alternatif
-    
-        // Créer une balise <figcaption> pour le titre
-        const figcaption = document.createElement("figcaption");
-        figcaption.textContent = work.title; // Définir le texte du titre
-    
-        // Ajouter l'image et le figcaption au <figure>
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-    
-        // Ajouter le <figure> à la galerie
-        gallery.appendChild(figure);
-    });
-    */
-
-
+});
