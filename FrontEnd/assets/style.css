@@ -130,7 +130,6 @@ nav li img {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
 .gallery {
 	width: 100%;
@@ -246,4 +245,58 @@ header nav a:hover {
 	font-size : 16px;
 	text-decoration : underline;
 	font-family: work sans;
+}
+
+.logout{
+	display: none;
+}
+
+header a {
+	text-decoration : none;
+}
+
+/* ----------------MODE EDITION-------------------- */
+
+.editMode {
+	display : none;
+
+	background-color: black;
+	padding : 20px 0px;
+}
+
+.editMode p {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;	
+	gap : 10px;
+
+}
+
+.edit-css{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap : 25px;
+	padding-bottom: 20px;
+}
+.edit {
+	display : none;
+	align-items: center;
+	gap: 12px;
+}
+
+.edit-css p{
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+	color: #1D6154;
+}
+
+.edit button{
+	all: unset;
+}
+
+.edit button:hover{	
+	cursor: pointer;	
 }

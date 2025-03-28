@@ -100,33 +100,48 @@ function filterImages(categoryId) {
     }
 }
 
-//----------------------------FETCH POST---------------------------------------------
+//----------------------------ADMIN MODE---------------------------------------------
 
-document.querySelector("#login-form").addEventListener("submit", async (event) => {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function() {
+    const token = localStorage.getItem('token');
+    console.log(token);
 
-    const email = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
-
-    try {
-        const response = await fetch("http://localhost:5678/api/login", {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email, password })
+    if (token) {
+        const adminMode = document.querySelectorAll('.adminMode');
+        adminMode.forEach(element => {
+            element.style.display = 'flex';
         });
 
-        const data = await response.json();
+        const login = document.querySelector('.login');
+        login.style.display = 'none';
 
-        if (response.ok) {
-            localStorage.setItem("authToken", data.token);
+        const editMode = document.querySelector('.editMode');
+        editMode.style.display = 'block';
 
-            window.location.href = "accueil.html";
-        } else {
-            document.querySelector("#error-message").textContent = "erreur";
-        }
-    } catch (error) {
-        console.error("Erreur lors de la connexion :", error);
+        const edit = document.querySelector('.edit');
+        edit.style.display = 'inline-flex';
+
+        const logout = document.querySelector('.logout');
+        logout.style.display = 'block';
+
     }
 });
+
+//-------------------Button pour ajouter des photos---------------------------------------------
+const editButtons = document.querySelectorAll('.edit');
+
+editButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        alert("Mode édition activé !");
+    });
+});
+
+//----------------------------Boutton logout---------------------------------------------
+
+const logoutButton = document.querySelector('.logout');
+
+logoutButton.addEventListener('click', function() {
+    localStorage.removeItem('token');
+});
+
+

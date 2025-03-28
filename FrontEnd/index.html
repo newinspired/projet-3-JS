@@ -8,17 +8,22 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
-	<link rel="stylesheet" href="./assets/style.css">	
+	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 	<script src="../FrontEnd/script.js" defer></script>
+	<div class="editMode" >
+		<p><i class="fa-regular fa-pen-to-square"></i>Mode édition </p>
+	</div>
 	<header>
-		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<a href="index.html"><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a>
 		<nav>
 			<ul>
-				<li><a target="_blank" href="#portfolio">projets</a></li>
-				<li><a target="_blank" href="#contact">contact</a></li>
-				<li><a target="_blank" href="../FrontEnd/login.html">login</a></li>
+				<li><a href="#portfolio">projets</a></li>
+				<li><a href="#contact">contact</a></li>
+				<li><a href="../FrontEnd/login.html" class="login">login</a></li>
+				<li><a href="../FrontEnd/index.html" class="logout bold">logout</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -36,7 +41,12 @@
 			</article>
 		</section>
 		<section id="portfolio">
-			<h2>Mes Projets</h2>
+			<div class="edit-css">
+				<h2>Mes Projets</h2>
+				<p class="edit"> 
+					<i class="fa-regular fa-pen-to-square"></i>  <button> modifier</button>
+				</p>
+			</div>
 			<div class="filters"></div>
 			<div class="gallery"></div>
 		</section>
