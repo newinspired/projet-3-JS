@@ -85,6 +85,13 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+h3{
+	font-family: 'WORK SANS';
+	font-size: 26px;
+	font-weight: 400;
+	color: black
+}
 nav ul {
 	display: flex;
 	align-items: center;
@@ -116,6 +123,10 @@ nav li img {
 	display: block;
 	margin: auto;
 	width: 80%;
+}
+
+button{
+	text-decoration: none;
 }
 
 #introduction article {
@@ -262,6 +273,7 @@ header a {
 
 	background-color: black;
 	padding : 20px 0px;
+	width: 100%;
 }
 
 .editMode p {
@@ -300,3 +312,74 @@ header a {
 .edit button:hover{	
 	cursor: pointer;	
 }
+
+/* ----------------MODE EDITION-------------------- */
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 25%;
+	height: 688px;
+	transform: translate(-50%, -50%);
+	top: 50%;
+    left: 50%;
+	background-color: white;
+	overflow: auto;
+	border: 1px solid black;
+	padding : 20px;
+	border-radius: 20px;
+}
+
+.modal h3{
+	text-align: center;
+	padding: 15px 0px;
+}
+
+.closeModal {
+	color: black;
+	float: right;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.closeModal:hover{
+	cursor: pointer;
+}
+
+.galleryModal {
+	display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+	padding : 5%;
+	/* background-color: lightblue; */
+}
+
+.galleryModal img {
+	width : 100%;
+	height : 102px;
+
+}
+
+.separatorModal{
+	border: 1px solid #B3B3B3;
+	width : 65%;
+	margin: 15% auto;
+}
+
+.addPicture{
+	display: flex;
+	justify-content: center;
+	background-color: #1D6154;
+	color : white;
+	padding : 10px 0px;
+	border-radius: 20px;
+	width : 50%;
+	margin: 15% auto;
+	cursor: pointer;
+	font-family: 'Syne';
+	font-weight: 700;
+}
+

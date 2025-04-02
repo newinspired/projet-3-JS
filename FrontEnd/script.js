@@ -15,15 +15,37 @@ async function fetchWorks() {
 fetchWorks();
 
 function addWorksToGallery(works) {
-    worksGlobal = works;
     const gallery = document.querySelector(".gallery"); 
-
     gallery.innerHTML = works.map(work => `
         <figure>
             <img src="${work.imageUrl}" alt="${work.title}">
             <figcaption>${work.title}</figcaption>
         </figure>
     `).join("");
+}
+
+//----------------------------Gallery Modal---------------------------------------------
+
+async function fetchWorksGalleryModal(works) {
+
+    fetch(`${API_BASE_URL}/works`)
+    .then((response) => response.json())
+    .then(works => {                                  
+
+
+        const gallery = document.querySelector(".galleryModal"); 
+
+        gallery.innerHTML = works.map(work => `
+            <figure>
+                <img src="${work.imageUrl}" alt="${work.title}">
+            </figure>
+        `).join("");
+    
+    })
+    .catch((error) => {
+        console.error(error); 
+    });
+
 }
 
 //----------------------------FILTRES---------------------------------------------
@@ -128,12 +150,29 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 //-------------------Button pour ajouter des photos---------------------------------------------
-const editButtons = document.querySelectorAll('.edit');
 
-editButtons.forEach(function(button) {
+const editButtons = document.querySelectorAll('.edit');
+const modal = document.getElementsByClassName('modal')[0];
+const closeModal = document.getElementsByClassName('closeModal')[0];
+const addPicture = document.getElementsByClassName('addPicture')[0];
+
+editButtons.forEach(button => {
     button.addEventListener('click', function() {
-        alert("Mode édition activé !");
+        modal.style.display = 'block';
+        fetchWorksGalleryModal();
     });
+});
+
+closeModal.addEventListener('click', function() {
+    modal.style.display = 'none';
+});
+
+
+addPicture.addEventListener('click', function() {
+    const modalAdd = document.getElementsByClassName('modalAdd')[0];
+    if (modalAdd) {
+        modalAdd.style.display = 'block';
+    }
 });
 
 //----------------------------Boutton logout---------------------------------------------
