@@ -383,3 +383,12 @@ header a {
 	font-weight: 700;
 }
 
+.addPicture fa-solid fa-trash{
+	color: blue;
+	size : 500px;
+}
+.galleruModal fa-solid fa-trash{
+	color: blue;
+	size : 500px;
+}
+

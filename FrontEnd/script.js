@@ -87,6 +87,24 @@ function filterImages(categoryId) {
     if (categoryId === "0") {
         fetchWorks();
     }
+    else {
+        fetch(`${API_BASE_URL}/works`)
+        .then((response) => response.json())
+        .then(works => {
+            const filteredWorks = works.filter(work => work.categoryId === categoryId);
+            addWorksToGallery(filteredWorks);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+}
+/*
+function filterImages(categoryId) {
+    console.log("categoryId", categoryId);
+    if (categoryId === "0") {
+        fetchWorks();
+    }
     if (categoryId === "1") {
         fetch(`${API_BASE_URL}/works`)
         .then((response) => response.json())
@@ -121,7 +139,23 @@ function filterImages(categoryId) {
         });
     }
 }
-
+*/
+function filterImages(categoryId) {
+    console.log("categoryId", categoryId);
+    if (categoryId === "0") {
+        fetchWorks();
+    } else {
+        fetch(`${API_BASE_URL}/works`)
+            .then((response) => response.json())
+            .then(works => {
+                const filteredWorks = works.filter(work => work.categoryId === parseInt(categoryId));
+                addWorksToGallery(filteredWorks);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+}
 //----------------------------ADMIN MODE---------------------------------------------
 
 document.addEventListener("DOMContentLoaded", function() {
