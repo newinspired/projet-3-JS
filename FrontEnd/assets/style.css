@@ -321,7 +321,7 @@ header a {
 	z-index: 1;
 	left: 0;
 	top: 0;
-	width: 25%;
+	width: 30%;
 	height: 688px;
 	transform: translate(-50%, -50%);
 	top: 50%;
@@ -372,23 +372,160 @@ header a {
 .addPicture{
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	background-color: #1D6154;
 	color : white;
-	padding : 10px 0px;
+	padding : 10px 20%;
 	border-radius: 20px;
-	width : 50%;
-	margin: 15% auto;
+	cursor: pointer;
+	font-family: 'Syne';
+	font-weight: 700;
+	margin: 0 auto;
+}
+
+.trash-image{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	size: 5px;
+	color: white;
+	background: black;
+	padding : 3px;
+	
+}
+
+.image-container{
+	position: relative;
+}
+
+.modal2{
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 30%;
+	height: 688px;
+	transform: translate(-50%, -50%);
+	top: 50%;
+    left: 50%;
+	background-color: white;
+	overflow: auto;
+	border: 1px solid black;
+	padding : 20px;
+	border-radius: 20px;
+}
+
+.modal2 h3{
+	text-align: center;
+	padding: 15px 0px;
+}
+
+.modal2 .closeModal2 {
+	color: black;
+	float: right;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.backModal{
+	color: black;
+	float: left;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.backModal:hover{
+	cursor: pointer;
+}
+.modal2 .closeModal2:hover{
+	cursor: pointer;
+}
+
+.addPictureModal2{
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	background-color: #E8F1F6;
+	color : white;
+	padding : 30px;
+	border-radius: 5px;
+	width : 60%;
+	height: 169px;
+	margin: 0px 10%;
 	cursor: pointer;
 	font-family: 'Syne';
 	font-weight: 700;
 }
-
-.addPicture fa-solid fa-trash{
-	color: blue;
-	size : 500px;
-}
-.galleruModal fa-solid fa-trash{
-	color: blue;
-	size : 500px;
+.addPictureModal2 i {
+	font-size: 50px;
+	color: #E8F1F6;
+	background-color : #CBD6DC;
 }
 
+.addPictureModal2 button{
+	background-color: #CBD6DC;
+	color : #306685;
+	border-radius: 20px;
+	padding : 10px 0px;
+	width : 100%;
+	margin: 15% auto;
+	cursor: pointer;
+	font-family: 'Syne';
+	font-weight: 700;
+	border: none;
+}
+
+.addPictureModal2 p{
+	font-family: 'Syne';
+	color: #444444;
+	font-size: 11px;
+}
+
+.addPictureModal2 form input{
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width : 100%;
+}
+
+.addPictureModal2 form{ 
+	margin-top: 80px;
+}
+
+.addPictureModal2 form label{
+	color: black;
+	font-family: 'work sans';
+	font-weight: 70;
+	font-size: 14px;
+}
+
+.modal2FormTitle{
+	padding-bottom : 20px;
+}
+
+.addPictureModal2 form select{
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width : 100%;
+	font-family : "Work sans";
+	font-size : 14px;
+	font-weight: 400;
+}
+
+.addModal2ToGallery {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #1D6154;
+	color : white;
+	padding : 10px 20%;
+	border-radius: 20px;
+	cursor: pointer;
+	font-family: 'Syne';
+	font-weight: 700;
+	margin: 0 auto;
+}

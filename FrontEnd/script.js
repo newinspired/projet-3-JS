@@ -24,6 +24,22 @@ function addWorksToGallery(works) {
     `).join("");
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //----------------------------Gallery Modal---------------------------------------------
 
 async function fetchWorksGalleryModal(works) {
@@ -36,17 +52,353 @@ async function fetchWorksGalleryModal(works) {
         const gallery = document.querySelector(".galleryModal"); 
 
         gallery.innerHTML = works.map(work => `
-            <figure>
+
+            <div class="image-container">
                 <img src="${work.imageUrl}" alt="${work.title}">
-            </figure>
+                <div class="trash-image"> 
+                    <i class="fa-solid fa-trash-can delete-icon" id="${work.id}"></i> 
+
+                </div>
+            </div>
+
         `).join("");
-    
+
+        document.querySelectorAll('.delete-icon').forEach(icon => {
+            icon.addEventListener('click', function () {
+                const workId = this.id;
+                console.log("Suppression de l’image avec ID :", workId);
+        
+                const token = localStorage.getItem('token');
+        
+                fetch(`${API_BASE_URL}/works/${workId}`, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Échec de la suppression.");
+                    }
+        
+                    const imageContainer = icon.closest('.image-container');
+                    imageContainer.remove();
+        
+                    const galleryFigures = document.querySelectorAll('.gallery figure');
+                    galleryFigures.forEach(figure => {
+                        const img = figure.querySelector('img');
+                        if (img && img.src.includes(workId)) {
+                            figure.remove();
+                        }
+                    });
+        
+                    fetchWorks();
+                    
+                    titleInput.value = '';
+                    categorySelect.value = '';
+                    imageInput.value = '';
+
+                    const overviewImage = document.querySelector(".newPicture");
+                    overviewImage.innerHTML = '<i class="fa-solid fa-image"></i>';
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la suppression :", error);
+                });
+            });
+        });
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
     })
     .catch((error) => {
         console.error(error); 
     });
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------Button pour ajouter des photos---------------------------------------------
+
+const editButtons = document.querySelectorAll('.edit');
+const modal = document.getElementsByClassName('modal')[0];
+const modal2 = document.getElementsByClassName('modal2')[0];
+const closeModal = document.getElementsByClassName('closeModal')[0];
+const closeModal2 = document.getElementsByClassName('closeModal2')[0];
+const backModal = document.getElementsByClassName('backModal')[0];
+const addPicture = document.getElementsByClassName('addPicture')[0];
+
+
+editButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        modal.style.display = 'block';
+        fetchWorksGalleryModal();
+    });
+});
+
+closeModal.addEventListener('click', function() {
+    modal.style.display = 'none';
+});
+
+closeModal2.addEventListener('click', function() {
+    modal2.style.display = 'none';
+});
+
+backModal.addEventListener('click', function() {
+    modal2.style.display = 'none';
+    modal.style.display = 'block';
+});
+
+
+addPicture.addEventListener('click', function() {
+    const modalAdd = document.getElementsByClassName('addPicture')[0];
+    if (modalAdd) {
+        modal.style.display = 'none';
+        modal2.style.display = 'block';
+    }
+
+});
+
+const fileInput = document.getElementById('uploadFile');
+const addPictureBtn = document.querySelector('.addPictureModal2Button');
+
+addPictureBtn.addEventListener('click', () => {
+    fileInput.click();
+});
+
+//--------------------Affiche un apercu de l'image--------------------------
+
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        console.log(fileName);
+
+        const overviewImage = document.querySelector(".newPicture"); 
+
+        
+        const imageURL = URL.createObjectURL(file);
+
+        overviewImage.innerHTML = `<img style="max-width: 100%; max-height: 200px; border-radius: 10px;" src='${imageURL}'>`;
+
+        const iconPreview = document.getElementsByClassName('fa-solid fa-image');
+        iconPreview[0].style.display = 'none';
+    }
+});
+
+
+
+
+
+
+
+//----------------Les catégories provenant de l'API Modal 2--------------------------
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const select = document.getElementById("categorie-select");
+
+    const apiUrl = "http://localhost:5678/api/categories";
+  
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        
+        data.forEach(categorie => {
+            console.log(`Catégorie ID: ${categorie.id}, Nom: ${categorie.name}`);
+            const option = document.createElement("option");
+            option.value = categorie.id;
+            option.textContent = categorie.name;
+            select.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error("Erreur", error);
+      });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//--------------Ajouter dans Modal 2 une oeuvre à la gallery--------------------------
+
+const addModal2toGallery = document.getElementsByClassName('addModal2ToGallery')[0];
+
+addModal2toGallery.addEventListener('click', () => {
+    const imageInput = document.getElementById('uploadFile');
+    const titleInput = document.querySelector('input[name="titre"]');
+    categorySelect = document.getElementById('categorie-select');
+
+    const token = localStorage.getItem('token');
+
+    if (!imageInput.files.length || !titleInput.value || !categorySelect.value) {
+        alert("Merci de remplir tous les champs !");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", imageInput.files[0]);
+    formData.append("title", titleInput.value);
+    formData.append("category", categorySelect.value);
+
+    fetch(`${API_BASE_URL}/works`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Erreur lors de l'envoi de l'image.");
+        }
+        return response.json();
+    })
+    .then(newWork => {
+        console.log("Image ajoutée :", newWork);
+        addWorksToGallery([...document.querySelectorAll(".gallery figure")].map(fig => ({
+            imageUrl: fig.querySelector("img").src,
+            title: fig.querySelector("figcaption").innerText
+        })).concat(newWork));
+
+        modal2.style.display = 'none';
+        modal.style.display = 'none';
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Échec de l'envoi.");
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//----------------------------Boutton logout---------------------------------------------
+
+const logoutButton = document.querySelector('.logout');
+
+logoutButton.addEventListener('click', function() {
+    localStorage.removeItem('token');
+});
+
 
 //----------------------------FILTRES---------------------------------------------
 
@@ -99,47 +451,7 @@ function filterImages(categoryId) {
         });
     }
 }
-/*
-function filterImages(categoryId) {
-    console.log("categoryId", categoryId);
-    if (categoryId === "0") {
-        fetchWorks();
-    }
-    if (categoryId === "1") {
-        fetch(`${API_BASE_URL}/works`)
-        .then((response) => response.json())
-        .then(works => {
-            const filteredWorks = works.filter(work => work.categoryId === 1);
-            addWorksToGallery(filteredWorks);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    }
-    if (categoryId === "2") {
-        fetch(`${API_BASE_URL}/works`)
-        .then((response) => response.json())
-        .then(works => {
-            const filteredWorks = works.filter(work => work.categoryId === 2);
-            addWorksToGallery(filteredWorks);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    }
-    if (categoryId === "3") {
-        fetch(`${API_BASE_URL}/works`)
-        .then((response) => response.json())
-        .then(works => {
-            const filteredWorks = works.filter(work => work.categoryId === 3);
-            addWorksToGallery(filteredWorks);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    }
-}
-*/
+
 function filterImages(categoryId) {
     console.log("categoryId", categoryId);
     if (categoryId === "0") {
@@ -156,6 +468,9 @@ function filterImages(categoryId) {
             });
     }
 }
+
+
+
 //----------------------------ADMIN MODE---------------------------------------------
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -182,39 +497,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 });
-
-//-------------------Button pour ajouter des photos---------------------------------------------
-
-const editButtons = document.querySelectorAll('.edit');
-const modal = document.getElementsByClassName('modal')[0];
-const closeModal = document.getElementsByClassName('closeModal')[0];
-const addPicture = document.getElementsByClassName('addPicture')[0];
-
-editButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        modal.style.display = 'block';
-        fetchWorksGalleryModal();
-    });
-});
-
-closeModal.addEventListener('click', function() {
-    modal.style.display = 'none';
-});
-
-
-addPicture.addEventListener('click', function() {
-    const modalAdd = document.getElementsByClassName('modalAdd')[0];
-    if (modalAdd) {
-        modalAdd.style.display = 'block';
-    }
-});
-
-//----------------------------Boutton logout---------------------------------------------
-
-const logoutButton = document.querySelector('.logout');
-
-logoutButton.addEventListener('click', function() {
-    localStorage.removeItem('token');
-});
-
-

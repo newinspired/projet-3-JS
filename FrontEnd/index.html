@@ -23,14 +23,58 @@
 		<span class="closeModal"> <i class="fa-solid fa-xmark"></i> </span>
 		<h3>Galerie photo</h3>
 		<div class="galleryModal">
-			<i class="fa-solid fa-trash"></i> 
 		</div>
 		<div class="separatorModal"></div>
-		<div class="addPicture" >Ajouter une photo
-			<i class="fa-solid fa-trash"></i> 
+		<div class="addPicture" >Ajouter une photo 
 		</div>
 		<div class="addPicture2"></div>
 	</div>
+
+
+
+
+
+	
+	<div class="modal2"> 
+		<span class="closeModal2"> <i class="fa-solid fa-xmark"></i> </span>
+		<span class="backModal"> <i class="fa-solid fa-arrow-left"></i></span>
+		<h3>Ajout une photo</h3>
+		<div class="addPictureModal2">
+			<div class="iconPreview">	
+				<i class="fa-solid fa-image"></i>
+				<div class="newPicture"> </div>
+			</div>
+				<input type="file" id="uploadFile" accept=".jpg,.jpeg,.png" style="display: none;">
+				<button class="addPictureModal2Button">+ Ajouter une photo</button>
+				<p> jpg, png : 4mo max</p>
+
+				<form action="#" method="post">
+					<div class="modal2FormTitle">
+						<label for="titre">Titre</label>
+						<input type="text" name="titre">
+					</div>
+					<label for="categorie">Catégorie</label>
+					<select name="categorie" id="categorie-select">
+  						<option value="">--Choisissez une catégorie--</option>
+					</select>
+				</form>
+			
+			<div class="separatorModal"></div>
+			<div class="addModal2ToGallery" >Valider 
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
