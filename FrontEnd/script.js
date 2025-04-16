@@ -93,10 +93,6 @@ async function fetchWorksGalleryModal(works) {
                     });
         
                     fetchWorks();
-                    
-                    titleInput.value = '';
-                    categorySelect.value = '';
-                    imageInput.value = '';
 
                     const overviewImage = document.querySelector(".newPicture");
                     overviewImage.innerHTML = '<i class="fa-solid fa-image"></i>';
@@ -164,22 +160,27 @@ const addPicture = document.getElementsByClassName('addPicture')[0];
 editButtons.forEach(button => {
     button.addEventListener('click', function() {
         modal.style.display = 'block';
+        document.querySelector('.backgroundModal').style.display = 'flex';
         fetchWorksGalleryModal();
+
     });
 });
 
 closeModal.addEventListener('click', function() {
     modal.style.display = 'none';
+    document.querySelector('.backgroundModal').style.display = 'none';
 });
 
 closeModal2.addEventListener('click', function() {
     modal2.style.display = 'none';
+    document.querySelector('.backgroundModal').style.display = 'none';
 });
 
 backModal.addEventListener('click', function() {
     modal2.style.display = 'none';
     modal.style.display = 'block';
 });
+
 
 
 addPicture.addEventListener('click', function() {
@@ -328,6 +329,7 @@ addModal2toGallery.addEventListener('click', () => {
 
         modal2.style.display = 'none';
         modal.style.display = 'none';
+        document.querySelector('.backgroundModal').style.display = 'none';
     })
     .catch(error => {
         console.error(error);
@@ -337,7 +339,13 @@ addModal2toGallery.addEventListener('click', () => {
 
 
 
-
+document.querySelector('.backgroundModal').addEventListener('click', (e) => {
+    if (e.target.classList.contains('backgroundModal')) {
+        modal.style.display = 'none';
+        modal2.style.display = 'none';
+        document.querySelector('.backgroundModal').style.display = 'none';
+    }
+});
 
 
 
@@ -494,6 +502,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const logout = document.querySelector('.logout');
         logout.style.display = 'block';
+
+        const filters = document.querySelector('.filters');
+        filters.style.display = 'none';
 
     }
 });

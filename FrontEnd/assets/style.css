@@ -328,7 +328,6 @@ header a {
     left: 50%;
 	background-color: white;
 	overflow: auto;
-	border: 1px solid black;
 	padding : 20px;
 	border-radius: 20px;
 }
@@ -391,6 +390,7 @@ header a {
 	color: white;
 	background: black;
 	padding : 3px;
+	cursor : pointer;
 	
 }
 
@@ -411,7 +411,6 @@ header a {
     left: 50%;
 	background-color: white;
 	overflow: auto;
-	border: 1px solid black;
 	padding : 20px;
 	border-radius: 20px;
 }
@@ -528,4 +527,15 @@ header a {
 	font-family: 'Syne';
 	font-weight: 700;
 	margin: 0 auto;
+}
+
+.backgroundModal{
+	display: none;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	z-index: 1000;
+	top: 0;
+	left: 0;
 }
