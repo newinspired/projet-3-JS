@@ -161,6 +161,7 @@ editButtons.forEach(button => {
     button.addEventListener('click', function() {
         modal.style.display = 'block';
         document.querySelector('.backgroundModal').style.display = 'flex';
+        document.body.classList.add('modal-open');
         fetchWorksGalleryModal();
 
     });
@@ -169,11 +170,14 @@ editButtons.forEach(button => {
 closeModal.addEventListener('click', function() {
     modal.style.display = 'none';
     document.querySelector('.backgroundModal').style.display = 'none';
+    document.body.classList.add('modal-open');
 });
+
 
 closeModal2.addEventListener('click', function() {
     modal2.style.display = 'none';
     document.querySelector('.backgroundModal').style.display = 'none';
+    document.body.classList.add('modal-open');
 });
 
 backModal.addEventListener('click', function() {
@@ -188,6 +192,7 @@ addPicture.addEventListener('click', function() {
     if (modalAdd) {
         modal.style.display = 'none';
         modal2.style.display = 'block';
+        document.body.classList.add('modal-open');
     }
 
 });
@@ -344,6 +349,7 @@ document.querySelector('.backgroundModal').addEventListener('click', (e) => {
         modal.style.display = 'none';
         modal2.style.display = 'none';
         document.querySelector('.backgroundModal').style.display = 'none';
+        document.body.classList.add('modal-open');
     }
 });
 
