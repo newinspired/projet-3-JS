@@ -447,10 +447,9 @@ header a {
 	flex-wrap: wrap;
 	background-color: #E8F1F6;
 	color : white;
-	padding : 30px;
+	padding : 0px 30px;
 	border-radius: 5px;
-	width : 60%;
-	height: 169px;
+	height: 207px;
 	margin: 0px 10%;
 	cursor: pointer;
 	font-family: 'Syne';
@@ -460,6 +459,7 @@ header a {
 	font-size: 50px;
 	color: #E8F1F6;
 	background-color : #CBD6DC;
+	justify-content: center	;
 }
 
 .addPictureModal2 button{
@@ -468,7 +468,6 @@ header a {
 	border-radius: 20px;
 	padding : 10px 0px;
 	width : 100%;
-	margin: 15% auto;
 	cursor: pointer;
 	font-family: 'Syne';
 	font-weight: 700;
@@ -490,7 +489,7 @@ header a {
 }
 
 .addPictureModal2 form{ 
-	margin-top: 80px;
+	margin-top: 40px;
 }
 
 .addPictureModal2 form label{
@@ -519,7 +518,7 @@ header a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #1D6154;
+	background-color: #A7A7A7;
 	color : white;
 	padding : 10px 20%;
 	border-radius: 20px;
@@ -542,4 +541,27 @@ header a {
 
 body.modal-open {
 	overflow: hidden;
+}
+
+
+.iconPreview{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 200px;
+	border-radius: 10px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	justify-content: center;
+	align-items: center;
+	gap : 10px;
+	padding-top: 5px;
+}
+
+.contenuIconPreviewModal2{
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap : 10px;
 }

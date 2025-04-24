@@ -170,14 +170,14 @@ editButtons.forEach(button => {
 closeModal.addEventListener('click', function() {
     modal.style.display = 'none';
     document.querySelector('.backgroundModal').style.display = 'none';
-    document.body.classList.add('modal-open');
+    document.body.classList.remove('modal-open');
 });
 
 
 closeModal2.addEventListener('click', function() {
     modal2.style.display = 'none';
     document.querySelector('.backgroundModal').style.display = 'none';
-    document.body.classList.add('modal-open');
+    document.body.classList.remove('modal-open');
 });
 
 backModal.addEventListener('click', function() {
@@ -212,7 +212,8 @@ fileInput.addEventListener('change', () => {
         const fileName = file.name;
         console.log(fileName);
 
-        const overviewImage = document.querySelector(".newPicture"); 
+        const overviewImage = document.querySelector(".newPicture");
+        overviewImage.innerHTML = "";
 
         
         const imageURL = URL.createObjectURL(file);
@@ -221,6 +222,9 @@ fileInput.addEventListener('change', () => {
 
         const iconPreview = document.getElementsByClassName('fa-solid fa-image');
         iconPreview[0].style.display = 'none';
+
+        const contenuIcon = document.querySelector('.contenuIconPreviewModal2');
+        if (contenuIcon) contenuIcon.style.display = 'none';
     }
 });
 
@@ -230,11 +234,11 @@ fileInput.addEventListener('change', () => {
 
 
 
-//----------------Les catégories provenant de l'API Modal 2--------------------------
+//----------------Les catégories provenant de l'API Modal 2--------------------------//
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const select = document.getElementById("categorie-select");
+    const select = document.getElementById("categorie");
 
     const apiUrl = "http://localhost:5678/api/categories";
   
@@ -293,52 +297,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //--------------Ajouter dans Modal 2 une oeuvre à la gallery--------------------------
 
-const addModal2toGallery = document.getElementsByClassName('addModal2ToGallery')[0];
+const addModal2ToGallery = document.getElementsByClassName('addModal2ToGallery')[0];
+        
+document.addEventListener("DOMContentLoaded", () => {
+    const validateBtn = document.querySelector(".addModal2ToGallery");
 
-addModal2toGallery.addEventListener('click', () => {
-    const imageInput = document.getElementById('uploadFile');
-    const titleInput = document.querySelector('input[name="titre"]');
-    categorySelect = document.getElementById('categorie-select');
+    validateBtn.addEventListener("click", async () => {
+        const fileInput = document.getElementById("uploadFile");
+        const file = fileInput?.files?.[0];
+        const titleInput = document.getElementById("titre");
+        const categorySelect = document.getElementById("categorie");
 
-    const token = localStorage.getItem('token');
 
-    if (!imageInput.files.length || !titleInput.value || !categorySelect.value) {
-        alert("Merci de remplir tous les champs !");
-        return;
-    }
 
-    const formData = new FormData();
-    formData.append("image", imageInput.files[0]);
-    formData.append("title", titleInput.value);
-    formData.append("category", categorySelect.value);
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("title", titleInput.value);
+        formData.append("category", categorySelect.value);
 
-    fetch(`${API_BASE_URL}/works`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Erreur lors de l'envoi de l'image.");
+        const token = localStorage.getItem("token");
+
+        try {
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error("Erreur lors de l'envoi");
+            }
+
+
+            const newWork = await response.json();
+            fetchWorks();
+            fetchWorksGalleryModal();
+
+
+            fileInput.value = "";
+            titleInput.value = "";
+            categorySelect.selectedIndex = 0;
+
+            const newPictureContainer = document.querySelector(".newPicture");
+            newPictureContainer.innerHTML = "";
+
+
+            const defaultIcon = document.createElement('i');
+            defaultIcon.className = "fa-solid fa-image";
+            newPictureContainer.appendChild(defaultIcon);
+
+            const contenuIcon = document.querySelector('.contenuIconPreviewModal2');
+            if (contenuIcon) contenuIcon.style.display = 'flex';
+
+
+
+
+
+
+
+
+
+        
+            document.querySelector(".modal2").style.display = "none";
+            document.querySelector(".backgroundModal").style.display = "none";
+            document.body.classList.remove('modal-open'); 
+
+
+
+
+
+            document.querySelector(".modal2").style.display = "none";
+            document.querySelector(".backgroundModal").style.display = "none";
+            document.body.classList.remove('modal-open'); 
+    
+
+        } catch (error) {
+            console.error("Erreur lors de l'ajout :", error);
+            alert("Une erreur est survenue lors de l'ajout.");
         }
-        return response.json();
-    })
-    .then(newWork => {
-        console.log("Image ajoutée :", newWork);
-        addWorksToGallery([...document.querySelectorAll(".gallery figure")].map(fig => ({
-            imageUrl: fig.querySelector("img").src,
-            title: fig.querySelector("figcaption").innerText
-        })).concat(newWork));
-
-        modal2.style.display = 'none';
-        modal.style.display = 'none';
-        document.querySelector('.backgroundModal').style.display = 'none';
-    })
-    .catch(error => {
-        console.error(error);
-        alert("Échec de l'envoi.");
     });
 });
 
@@ -349,7 +387,7 @@ document.querySelector('.backgroundModal').addEventListener('click', (e) => {
         modal.style.display = 'none';
         modal2.style.display = 'none';
         document.querySelector('.backgroundModal').style.display = 'none';
-        document.body.classList.add('modal-open');
+        document.body.classList.remove('modal-open');
     }
 });
 
@@ -513,4 +551,29 @@ document.addEventListener("DOMContentLoaded", function() {
         filters.style.display = 'none';
 
     }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const fileInput = document.getElementById("uploadFile");
+    const titleInput = document.getElementById("titre");
+    const categorySelect = document.getElementById("categorie");
+    const addButton = document.querySelector(".addModal2ToGallery");
+
+    function checkFormFields() {
+        const file = fileInput?.files?.[0];
+        const title = titleInput.value.trim();
+        const category = categorySelect.value;
+
+        if (file && title && category) {
+            addButton.style.backgroundColor = "#1D6154";
+        } else {
+            addButton.style.backgroundColor = "#A7A7A7";
+        }
+    }
+
+    fileInput.addEventListener("change", checkFormFields);
+    titleInput.addEventListener("input", checkFormFields);
+    categorySelect.addEventListener("change", checkFormFields);
+
+    checkFormFields();
 });

@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-	<script src="../FrontEnd/script.js" defer></script>
+
 	<div class="editMode" >
 		<p><i class="fa-regular fa-pen-to-square"></i>Mode édition </p>
 	</div>
@@ -45,10 +45,12 @@
 			<div class="iconPreview">	
 				<i class="fa-solid fa-image"></i>
 				<div class="newPicture"> </div>
+				<div class="contenuIconPreviewModal2">
+					<input type="file" id="uploadFile" accept=".jpg,.jpeg,.png" style="display: none;">
+					<button class="addPictureModal2Button">+ Ajouter une photo</button>
+					<p> jpg, png : 4mo max</p>
+				</div>
 			</div>
-				<input type="file" id="uploadFile" accept=".jpg,.jpeg,.png" style="display: none;">
-				<button class="addPictureModal2Button">+ Ajouter une photo</button>
-				<p> jpg, png : 4mo max</p>
 
 				<form action="#" method="post">
 					<div class="modal2FormTitle">
@@ -97,7 +99,7 @@
 	</header>
 	<main>
 
-		<section id="introduction">
+		<div id="introduction">
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">
 			</figure>
@@ -107,7 +109,7 @@
 				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 				<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 			</article>
-		</section>
+		</div>
 		<section id="portfolio">
 			<div class="edit-css">
 				<h2>Mes Projets</h2>
@@ -139,5 +141,6 @@
 			</ul>
 		</nav>
 	</footer>
+	<script src="../FrontEnd/script.js" defer></script>
 </body>
 </html>
