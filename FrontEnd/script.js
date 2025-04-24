@@ -95,7 +95,13 @@ async function fetchWorksGalleryModal(works) {
                     fetchWorks();
 
                     const overviewImage = document.querySelector(".newPicture");
-                    overviewImage.innerHTML = '<i class="fa-solid fa-image"></i>';
+                    overviewImage.innerHTML = "";
+
+                    const iconPreview = document.querySelector(".iconPreview i");
+                    if (iconPreview) iconPreview.style.display = "block";
+
+                    const contenuIcon = document.querySelector('.contenuIconPreviewModal2');
+                    if (contenuIcon) contenuIcon.style.display = 'flex';
                 })
                 .catch(error => {
                     console.error("Erreur lors de la suppression :", error);
@@ -343,10 +349,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const newPictureContainer = document.querySelector(".newPicture");
             newPictureContainer.innerHTML = "";
 
+            const iconPreview = document.querySelector(".iconPreview i");
+            if (iconPreview) iconPreview.style.display = "block";
 
-            const defaultIcon = document.createElement('i');
-            defaultIcon.className = "fa-solid fa-image";
-            newPictureContainer.appendChild(defaultIcon);
 
             const contenuIcon = document.querySelector('.contenuIconPreviewModal2');
             if (contenuIcon) contenuIcon.style.display = 'flex';
