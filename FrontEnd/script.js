@@ -212,6 +212,8 @@ addPictureBtn.addEventListener('click', () => {
 
 //--------------------Affiche un apercu de l'image--------------------------
 
+
+
 fileInput.addEventListener('change', () => {
     if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
@@ -314,6 +316,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const titleInput = document.getElementById("titre");
         const categorySelect = document.getElementById("categorie");
 
+        if (!file || !titleInput.value.trim() || !categorySelect.value) {
+            alert("Veuillez remplir tous les champs (image, titre, catégorie).");
+            return; // Empêche la requête
+        }
 
 
         const formData = new FormData();
@@ -457,9 +463,34 @@ logoutButton.addEventListener('click', function() {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //----------------------------FILTRES---------------------------------------------
 
-document.addEventListener("DOMContentLoaded", () => {
+/*document.addEventListener("DOMContentLoaded", () => {
     const categories = [
         { id: "0", name: "Tous" },
         { id: "1", name: "Objets" },
@@ -525,6 +556,90 @@ function filterImages(categoryId) {
             });
     }
 }
+*/
+
+document.addEventListener("DOMContentLoaded", () => {
+    const filtersContainer = document.querySelector(".filters");
+
+    const allButton = document.createElement("button");
+    allButton.classList.add("filters-button", "active");
+    allButton.dataset.category = "0";
+    allButton.textContent = "Tous";
+    allButton.addEventListener("click", () => {
+        filterImages("0");
+        setActiveButton(allButton);
+    });
+    filtersContainer.appendChild(allButton);
+
+    fetch(`${API_BASE_URL}/categories`)
+        .then(response => response.json())
+        .then(categories => {
+            categories.forEach(category => {
+                const button = document.createElement("button");
+                button.classList.add("filters-button");
+                button.dataset.category = category.id;
+                button.textContent = category.name;
+
+                button.addEventListener("click", () => {
+                    filterImages(category.id);
+                    setActiveButton(button);
+                });
+
+                filtersContainer.appendChild(button);
+            });
+        })
+        .catch(error => {
+            console.error("Erreur lors du chargement des catégories :", error);
+        });
+
+    function setActiveButton(activeButton) {
+        document.querySelectorAll(".filters-button").forEach(button => {
+            button.classList.remove("active");
+        });
+        activeButton.classList.add("active");
+    }
+
+    filterImages("0");
+});
+
+function filterImages(categoryId) {
+    fetch(`${API_BASE_URL}/works`)
+        .then(response => response.json())
+        .then(works => {
+            const filteredWorks = categoryId === "0"
+                ? works
+                : works.filter(work => work.categoryId === parseInt(categoryId));
+            addWorksToGallery(filteredWorks);
+        })
+        .catch(error => {
+            console.error("Erreur lors du chargement des œuvres :", error);
+        });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -582,3 +697,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     checkFormFields();
 });
+
